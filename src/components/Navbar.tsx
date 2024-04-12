@@ -23,7 +23,7 @@ const Navbar = () => {
           height={54}
           alt="logo"
         />
-        <h4 className="text-sm">BidZone</h4>
+        <h4 className="text-lg">BidZone</h4>
       </div>
 
       <form className="hidden lg:flex justify-center items-center gap-2">
