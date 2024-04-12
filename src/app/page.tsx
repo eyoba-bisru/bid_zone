@@ -17,30 +17,43 @@ export default function Home() {
     <div className="flex flex-col justify-between p-4 border">
       <ScrollToTop />
       <nav className="flex justify-between items-center">
-        <div className="flex justify-center items-center">
-          <Image src="/logo.svg" width={54} height={54} alt="logo" />
+        <div className="flex flex-col justify-center items-center lg:flex-row">
+          <Image
+            src="/logo.svg"
+            className="w-10 h-10 lg:w-20 lg:h-20"
+            width={54}
+            height={54}
+            alt="logo"
+          />
           <h4 className="text-sm">BidZone</h4>
         </div>
 
-        <form className="flex justify-center items-center gap-2">
+        <form className="hidden lg:flex justify-center items-center gap-2">
           <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Search by category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="apple">Apple</SelectItem>
-                <SelectItem value="banana">Banana</SelectItem>
-                <SelectItem value="blueberry">Blueberry</SelectItem>
-                <SelectItem value="grapes">Grapes</SelectItem>
-                <SelectItem value="pineapple">Pineapple</SelectItem>
-              </SelectGroup>
-            </SelectContent>
+            <div className="hidden xl:block">
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Search by category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="apple">Apple</SelectItem>
+                  <SelectItem value="banana">Banana</SelectItem>
+                  <SelectItem value="blueberry">Blueberry</SelectItem>
+                  <SelectItem value="grapes">Grapes</SelectItem>
+                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </div>
           </Select>
 
-          <Input placeholder="Search by category" className="w-[450px]" />
+          <Input
+            placeholder="Search everything"
+            className="w-[450px] hidden lg:block"
+          />
 
-          <Button type="submit">Search</Button>
+          <Button className="hidden lg:block" type="submit">
+            Search
+          </Button>
         </form>
 
         <div>
