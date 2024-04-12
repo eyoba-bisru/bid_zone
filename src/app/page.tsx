@@ -4,17 +4,18 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 
 import Image from "next/image";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function Home() {
   return (
     <div className="flex flex-col justify-between p-4 border">
+      <ScrollToTop />
       <nav className="flex justify-between items-center">
         <div className="flex justify-center items-center">
           <Image src="/logo.svg" width={54} height={54} alt="logo" />
@@ -46,8 +47,8 @@ export default function Home() {
           <a href="/login">
             <Button variant={"link"}>Login</Button>
           </a>
-          <a href="login">
-            <Button variant="secondary">Register</Button>
+          <a href="/register">
+            <Button variant="outline">Register</Button>
           </a>
         </div>
       </nav>
