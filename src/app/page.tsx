@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import FilterByCategory from "@/components/FilterByCategory";
 import ProductCard from "@/components/ProductCard";
 import Footer from "@/components/Footer";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -11,7 +12,9 @@ export default function Home() {
       <ScrollToTop />
       <Navbar />
 
-      <FilterByCategory />
+      <Suspense fallback={<div>Loading</div>}>
+        <FilterByCategory />
+      </Suspense>
 
       <div className="flex justify-center items-center mb-10">
         <h1 className="text-3xl font-bold">
