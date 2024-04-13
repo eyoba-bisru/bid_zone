@@ -44,7 +44,7 @@ export default function ProductCard({
       <Card>
         <CardHeader>
           <Image
-            className="rounded"
+            className="rounded mx-auto"
             src={image}
             width={400}
             height={400}
