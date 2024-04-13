@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import React, { Suspense } from "react";
-import { products } from "@/app/page";
+import products from "@/lib/data.json";
 import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
 import {
@@ -26,9 +26,9 @@ const ProductDetail = () => {
 
   return (
     <div className="flex flex-col justify-between p-4 border max-w-[1800px] mx-auto">
-      {/* <Navbar /> */}
+      <Navbar />
 
-      <Card className="flex justify-start items-center h-[400px]">
+      <Card className="flex justify-start items-center h-[400px] mt-10">
         <CardHeader>
           <Image
             className="rounded"
