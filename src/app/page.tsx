@@ -3,6 +3,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Navbar from "@/components/Navbar";
 import FilterByCategory from "@/components/FilterByCategory";
 import ProductCard from "@/components/ProductCard";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -18,7 +19,7 @@ export default function Home() {
         </h1>
       </div>
 
-      <div className="flex flex-wrap gap-4 justify-center items-center">
+      <div className="flex flex-wrap gap-4 justify-center items-center mb-10">
         <ProductCard />
         <ProductCard />
         <ProductCard />
@@ -26,6 +27,8 @@ export default function Home() {
         <ProductCard />
         <ProductCard />
       </div>
+
+      <Footer />
     </div>
   );
 }
