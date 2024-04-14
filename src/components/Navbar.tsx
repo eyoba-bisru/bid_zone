@@ -58,11 +58,8 @@ const Navbar = () => {
       </form>
 
       <div>
-        <a href="/login">
+        <a href="/api/auth/signin">
           <Button variant={"link"}>Login</Button>
-        </a>
-        <a href="/register">
-          <Button variant="outline">Register</Button>
         </a>
       </div>
     </nav>
