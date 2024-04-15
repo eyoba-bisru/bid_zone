@@ -26,8 +26,6 @@ const ProductDetail = () => {
 
   return (
     <div className="flex flex-col justify-between p-4 border max-w-[1800px] mx-auto">
-      <Navbar />
-
       <Card className="flex justify-start items-center h-[400px] mt-10">
         <CardHeader>
           <Image

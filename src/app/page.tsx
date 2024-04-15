@@ -10,9 +10,6 @@ import products from "@/lib/data.json";
 export default function Home() {
   return (
     <div className="flex flex-col justify-between p-4 border max-w-[1800px] mx-auto">
-      <ScrollToTop />
-      <Navbar />
-
       <Suspense fallback={<div>Loading</div>}>
         <FilterByCategory />
       </Suspense>

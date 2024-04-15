@@ -4,6 +4,8 @@ import "./globals.css";
 import { Poppins as FontSans } from "next/font/google";
 
 import { cn } from "@/lib/utils";
+import ScrollToTop from "@/components/ScrollToTop";
+import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "BidZone",
@@ -30,6 +32,9 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
+        <ScrollToTop />
+        <Navbar />
+
         {children}
       </body>
     </html>
