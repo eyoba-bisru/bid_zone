@@ -78,3 +78,28 @@ model Authenticator {
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model Category {
+    id      String    @id @default(auto()) @map("_id") @db.ObjectId
+    name    String
+    Product Product[]
+}
+
+model Condition {
+    id      String    @id @default(auto()) @map("_id") @db.ObjectId
+    name    String
+    Product Product[]
+}
+
+model Product {
+    id          String    @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    image       String
+    price       Float
+    categoryId  String    @db.ObjectId
+    conditionId String    @db.ObjectId
+    bids        Int       @default(0)
+    descrition  String
+    category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    condition   Condition @relation(fields: [conditionId], references: [id], onDelete: Cascade)
+}

@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import products from "@/lib/data.json";
 import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
@@ -17,12 +17,22 @@ import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Product } from "../../../../types/product";
 
 const ProductDetail = () => {
   const id = useParams().id as string;
 
-  const product = products.find((product) => product.id === parseInt(id));
-  if (!product) return <div>no product</div>;
+  const [product, setProduct] = useState<Product>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/api/product?id=" + id);
+      const data = await response.json();
+      setProduct(data);
+      console.log(data);
+    };
+    fetchData();
+  }, [id]);
 
   return (
     <div className="flex flex-col justify-between p-4 border max-w-[1800px] mx-auto">
@@ -30,7 +40,7 @@ const ProductDetail = () => {
         <CardHeader>
           <Image
             className="rounded"
-            src={product.image}
+            src={product?.image as string}
             width={600}
             height={400}
             alt="shoe"
@@ -39,19 +49,19 @@ const ProductDetail = () => {
 
         <CardContent className="flex flex-col justify-between items-start h-full p-4">
           <div className="flex gap-6 flex-col justify-center items-start">
-            <CardTitle>{product.title}</CardTitle>
-            <Badge className="bg-green-600">{product.condition}</Badge>
+            <CardTitle>{product?.title}</CardTitle>
+            <Badge className="bg-green-600">{product?.condition?.name}</Badge>
             <div className="text-red-500">43 sec (Today 3:11)</div>
           </div>
-          <div className="max-w-[400px]">{product.descrition}</div>
+          <div className="max-w-[400px]">{product?.descrition}</div>
           <div className="flex gap-20 items-center">
             <div>
-              <div className="font-bold">Start from ETB {product.price}</div>
+              <div className="font-bold">Start from ETB {product?.price}</div>
               <Input className="w-30" type="number" required />
             </div>
             <div className="flex flex-col justify-center items-center">
               <div className="text-sm text-muted-foreground">
-                {product.bids} bids
+                {product?.bids} bids
               </div>
               <Button>Place Bid</Button>
             </div>

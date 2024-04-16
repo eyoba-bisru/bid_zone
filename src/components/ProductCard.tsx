@@ -20,25 +20,18 @@ import {
 import Image from "next/image";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
-
-type ProductCardProps = {
-  id: number;
-  title: string;
-  image: string;
-  price: number;
-  category: string;
-  condition: string;
-  bids: number;
-};
+import { Product } from "../../types/product";
 
 export default function ProductCard({
+  bids,
+  category,
+  condition,
+  descrition,
   id,
-  title,
   image,
   price,
-  condition,
-  bids,
-}: ProductCardProps) {
+  title,
+}: Product) {
   return (
     <Link href={`/product/${id}`} passHref>
       <Card>
@@ -54,7 +47,7 @@ export default function ProductCard({
         <CardContent>
           <div className="flex gap-6 justify-between items-center">
             <CardTitle>{title}</CardTitle>
-            <Badge className="bg-green-600">{condition}</Badge>
+            <Badge className="bg-green-600">{condition.name}</Badge>
           </div>
         </CardContent>
         <CardFooter className="flex justify-between">

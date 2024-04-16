@@ -4,8 +4,10 @@ import Navbar from "@/components/Navbar";
 import FilterByCategory from "@/components/FilterByCategory";
 import ProductCard from "@/components/ProductCard";
 import Footer from "@/components/Footer";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import products from "@/lib/data.json";
+import { Product } from "../../types/product";
+import Products from "@/components/Products";
 
 export default function Home() {
   return (
@@ -20,12 +22,9 @@ export default function Home() {
         </h1>
       </div>
 
-      <div className="flex flex-wrap gap-4 justify-center items-center mb-10">
-        {products.map((product) => (
-          <ProductCard key={product.id} {...product} />
-        ))}
-      </div>
-
+      <Suspense fallback={<div>Loading</div>}>
+        <Products />
+      </Suspense>
       <Footer />
     </div>
   );

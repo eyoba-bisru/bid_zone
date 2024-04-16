@@ -27,7 +27,7 @@ const Navbar = async () => {
   const session = await auth();
 
   return (
-    <nav className="flex justify-between items-center">
+    <nav className="flex justify-between items-center px-4">
       <Link href="/" passHref>
         <div className="flex flex-col justify-center items-center lg:flex-row">
           <Image
