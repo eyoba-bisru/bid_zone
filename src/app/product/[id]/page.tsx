@@ -1,16 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
-import React, { Suspense, useEffect, useState } from "react";
-import products from "@/lib/data.json";
-import Navbar from "@/components/Navbar";
-import ProductCard from "@/components/ProductCard";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card";
+import React, { useEffect, useState } from "react";
+import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import image from "next/image";
 import Image from "next/image";
 import Footer from "@/components/Footer";
@@ -18,21 +9,47 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Product } from "../../../../types/product";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ProductDetail = () => {
   const id = useParams().id as string;
-
   const [product, setProduct] = useState<Product>();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/api/product?id=" + id);
-      const data = await response.json();
-      setProduct(data);
-      console.log(data);
+      try {
+        setLoading(true);
+        const response = await fetch("/api/product?id=" + id);
+        const data = await response.json();
+        setLoading(false);
+        setProduct(data);
+      } catch (error) {
+        setError("Error fetching data");
+        setLoading(false);
+      }
     };
     fetchData();
   }, [id]);
+
+  if (loading)
+    return (
+      <div className="flex gap-2 justify-center items-center">
+        <Skeleton className="h-[400px] w-[500px] rounded-xl" />
+        <div className="space-y-2">
+          <Skeleton className="h-10 w-[250px]" />
+          <Skeleton className="h-10 w-[200px]" />
+        </div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <>
+        <div className="mx-auto text-red-500">{error}</div>
+      </>
+    );
 
   return (
     <div className="flex flex-col justify-between p-4 border max-w-[1800px] mx-auto">
