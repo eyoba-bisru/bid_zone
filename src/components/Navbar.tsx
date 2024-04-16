@@ -12,8 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -22,9 +21,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { auth } from "@/auth";
 
 const Navbar = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   return (
     <nav className="flex justify-between items-center">
