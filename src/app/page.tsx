@@ -5,17 +5,21 @@ import { Suspense, useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import ProductCard from "@/components/ProductCard";
 import { Product } from "../../types/product";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const param = useSearchParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/products");
+        const response = await fetch(
+          "/api/products?category=" + param.get("category")
+        );
         const data = await response.json();
         setLoading(false);
         setProducts(data);
@@ -26,7 +30,7 @@ export default function Home() {
     };
 
     fetchData();
-  }, []);
+  }, [param]);
 
   return (
     <div className="flex flex-col justify-between p-4 border max-w-[1800px] mx-auto">
