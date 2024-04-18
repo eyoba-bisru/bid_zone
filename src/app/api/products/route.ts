@@ -1,10 +1,7 @@
 import { prisma } from "../../../../prisma/prisma-client";
-import { NextApiRequest } from "next";
 
 export async function GET(request: Request) {
   const category = new URL(request.url).searchParams.get("category");
-
-  console.log("hellooooooo", category);
 
   if (category != "null" && category != "all") {
     const res = await prisma.product.findMany({

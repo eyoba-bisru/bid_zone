@@ -1,15 +1,4 @@
-import React from "react";
-
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { auth } from "@/auth";
+import Search from "./Search";
 
 const Navbar = async () => {
   const session = await auth();
@@ -41,33 +31,7 @@ const Navbar = async () => {
         </div>
       </Link>
 
-      <form className="hidden lg:flex justify-center items-center gap-2">
-        <Select>
-          <div className="hidden xl:block">
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Search by category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="apple">Apple</SelectItem>
-                <SelectItem value="banana">Banana</SelectItem>
-                <SelectItem value="blueberry">Blueberry</SelectItem>
-                <SelectItem value="grapes">Grapes</SelectItem>
-                <SelectItem value="pineapple">Pineapple</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </div>
-        </Select>
-
-        <Input
-          placeholder="Search everything"
-          className="w-[450px] hidden lg:block"
-        />
-
-        <Button className="hidden lg:block" type="submit">
-          Search
-        </Button>
-      </form>
+      <Search />
 
       <div className="flex items-center">
         {session?.user ? (
