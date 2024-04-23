@@ -66,7 +66,58 @@ export default function Home() {
                 <Skeleton className="h-4 w-[390px]" />
               </div>
             </div>
+            <div className="flex flex-col space-y-3">
+              <Skeleton className="h-[125px] w-[390px] rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[390px]" />
+                <Skeleton className="h-4 w-[390px]" />
+              </div>
+            </div>
+            <div className="flex flex-col space-y-3">
+              <Skeleton className="h-[125px] w-[390px] rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[390px]" />
+                <Skeleton className="h-4 w-[390px]" />
+              </div>
+            </div>
+            <div className="flex flex-col space-y-3">
+              <Skeleton className="h-[125px] w-[390px] rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[390px]" />
+                <Skeleton className="h-4 w-[390px]" />
+              </div>
+            </div>
+            <div className="flex flex-col space-y-3">
+              <Skeleton className="h-[125px] w-[390px] rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[390px]" />
+                <Skeleton className="h-4 w-[390px]" />
+              </div>
+            </div>
+            <div className="flex flex-col space-y-3">
+              <Skeleton className="h-[125px] w-[390px] rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[390px]" />
+                <Skeleton className="h-4 w-[390px]" />
+              </div>
+            </div>
+            <div className="flex flex-col space-y-3">
+              <Skeleton className="h-[125px] w-[390px] rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[390px]" />
+                <Skeleton className="h-4 w-[390px]" />
+              </div>
+            </div>
+            <div className="flex flex-col space-y-3">
+              <Skeleton className="h-[125px] w-[390px] rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[390px]" />
+                <Skeleton className="h-4 w-[390px]" />
+              </div>
+            </div>
           </>
+        ) : products.length == 0 && !error ? (
+          <div className="text-3xl h-80">No Data Available</div>
         ) : (
           products.map((product) => (
             <ProductCard key={product.id} {...product} />

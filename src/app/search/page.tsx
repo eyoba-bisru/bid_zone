@@ -67,6 +67,8 @@ const SearchPage = () => {
               </div>
             </div>
           </>
+        ) : products.length == 0 && !error ? (
+          <div className="text-3xl h-80">No Data Available</div>
         ) : (
           products.map((product) => (
             <ProductCard key={product.id} {...product} />

@@ -6,6 +6,7 @@ import { Poppins as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import ScrollToTop from "@/components/ScrollToTop";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "BidZone",
@@ -36,6 +37,7 @@ export default function RootLayout({
         <Navbar />
 
         {children}
+        <Toaster />
       </body>
     </html>
   );

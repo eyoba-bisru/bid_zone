@@ -1,8 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import image from "next/image";
 import Image from "next/image";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
@@ -10,12 +9,16 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Product } from "../../../../types/product";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/components/ui/use-toast";
 
 const ProductDetail = () => {
   const id = useParams().id as string;
   const [product, setProduct] = useState<Product>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const bidRef = useRef<HTMLInputElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +35,44 @@ const ProductDetail = () => {
     };
     fetchData();
   }, [id]);
+
+  const handleBid = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      if (bidRef.current) {
+        await fetch("/api/bid", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            productId: id,
+            amount: bidRef.current.value,
+          }),
+        });
+      }
+
+      bidRef.current!.value = "";
+      setIsLoading(false);
+
+      setLoading(true);
+      const response = await fetch("/api/product?id=" + id);
+      const data = await response.json();
+      setLoading(false);
+      setProduct(data);
+
+      setLoading(false);
+    } catch (error: any) {
+      setIsLoading(false);
+      setLoading(false);
+
+      toast({
+        title: error.message,
+      });
+    }
+  };
 
   if (loading)
     return (
@@ -52,8 +93,8 @@ const ProductDetail = () => {
     );
 
   return (
-    <div className="flex flex-col justify-between p-4 border max-w-[1800px] mx-auto">
-      <Card className="flex justify-start items-center h-[400px] mt-10">
+    <div className="flex flex-col justify-between min-h-screen p-4 border max-w-[1800px] mx-auto">
+      <Card className="flex flex-col md:flex-row justify-start items-center min-h-[400px] mt-10">
         <CardHeader>
           <Image
             className="rounded"
@@ -65,23 +106,35 @@ const ProductDetail = () => {
         </CardHeader>
 
         <CardContent className="flex flex-col justify-between items-start h-full p-4">
-          <div className="flex gap-6 flex-col justify-center items-start">
+          <div className="flex mb-8 gap-6 flex-col justify-center items-start">
             <CardTitle>{product?.title}</CardTitle>
             <Badge className="bg-green-600">{product?.condition?.name}</Badge>
             <div className="text-red-500">43 sec (Today 3:11)</div>
           </div>
-          <div className="max-w-[400px]">{product?.descrition}</div>
-          <div className="flex gap-20 items-center">
-            <div>
+          <div className="max-w-[400px] mb-8">{product?.descrition}</div>
+          <div className="flex items-center flex-col">
+            <div className="flex justify-start items-center gap-20">
               <div className="font-bold">Start from ETB {product?.price}</div>
-              <Input className="w-30" type="number" required />
-            </div>
-            <div className="flex flex-col justify-center items-center">
               <div className="text-sm text-muted-foreground">
                 {product?.bids} bids
               </div>
-              <Button>Place Bid</Button>
             </div>
+            <form
+              onSubmit={handleBid}
+              className="flex justify-center items-center gap-10"
+            >
+              <Input
+                disabled={isLoading}
+                className="w-30"
+                type="number"
+                required
+                ref={bidRef}
+              ></Input>
+              <Button>
+                {isLoading ? <span className="loader mr-2"></span> : ""} Place
+                Bid
+              </Button>
+            </form>
           </div>
         </CardContent>
       </Card>
