@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Product } from "../../../../types/product";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/use-toast";
+import useTimer from "@/hooks/useTimer";
 
 const ProductDetail = () => {
   const id = useParams().id as string;
@@ -19,6 +20,7 @@ const ProductDetail = () => {
   const bidRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const timer = useTimer(new Date(product?.bidFinish));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -109,7 +111,17 @@ const ProductDetail = () => {
           <div className="flex mb-8 gap-6 flex-col justify-center items-start">
             <CardTitle>{product?.title}</CardTitle>
             <Badge className="bg-green-600">{product?.condition?.name}</Badge>
-            <div className="text-red-500">43 sec (Today 3:11)</div>
+            <div className="text-red-500">
+              {timer == "0" ? "end" : timer}
+              {timer != "0" && (
+                <div>
+                  Will be finished at {}{" "}
+                  {new Date(product?.bidFinish).toDateString() +
+                    " " +
+                    new Date(product?.bidFinish).toLocaleString().slice(11, 18)}
+                </div>
+              )}
+            </div>
           </div>
           <div className="max-w-[400px] mb-8">{product?.descrition}</div>
           <div className="flex items-center flex-col">

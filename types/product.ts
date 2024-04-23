@@ -9,6 +9,7 @@ export type Product = {
   descrition: string;
   category: Category;
   condition: Condition;
+  bidFinish: Date;
 };
 
 export type Category = {

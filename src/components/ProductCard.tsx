@@ -21,6 +21,7 @@ import Image from "next/image";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
 import { Product } from "../../types/product";
+import useTimer from "@/hooks/useTimer";
 
 export default function ProductCard({
   bids,
@@ -31,7 +32,10 @@ export default function ProductCard({
   image,
   price,
   title,
+  bidFinish,
 }: Product) {
+  const timer = useTimer(new Date(bidFinish));
+
   return (
     <Link href={`/product/${id}`} passHref>
       <Card>
@@ -55,7 +59,7 @@ export default function ProductCard({
             <div className="font-bold">ETB {price}</div>
             <div className="text-sm text-muted-foreground">{bids} bids</div>
           </div>
-          <div className="text-red-500">43 sec (Today 3:11)</div>
+          <div className="text-red-500">{timer == "0" ? "end" : timer}</div>
         </CardFooter>
       </Card>
     </Link>
