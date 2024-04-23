@@ -43,6 +43,9 @@ const ProductDetail = () => {
     setIsLoading(true);
 
     try {
+      if (bidRef.current!.value < product!.price) {
+        throw new Error("Bid amount must be greater than current price");
+      }
       if (bidRef.current) {
         await fetch("/api/bid", {
           method: "POST",
@@ -69,8 +72,10 @@ const ProductDetail = () => {
     } catch (error: any) {
       setIsLoading(false);
       setLoading(false);
+      bidRef.current!.value = "";
 
       toast({
+        variant: "destructive",
         title: error.message,
       });
     }
@@ -112,42 +117,48 @@ const ProductDetail = () => {
             <CardTitle>{product?.title}</CardTitle>
             <Badge className="bg-green-600">{product?.condition?.name}</Badge>
             <div className="text-red-500">
-              {timer == "0" ? "end" : timer}
-              {timer != "0" && (
+              {timer == "0" ? "end" : timer.includes("NaN") ? "" : timer}
+              {timer == "0" || timer.includes("NaN") ? (
+                ""
+              ) : (
                 <div>
                   Will be finished at {}{" "}
-                  {new Date(product?.bidFinish).toDateString() +
+                  {new Date(product!.bidFinish).toDateString() +
                     " " +
-                    new Date(product?.bidFinish).toLocaleString().slice(11, 18)}
+                    new Date(product!.bidFinish).toLocaleString().slice(11, 18)}
                 </div>
               )}
             </div>
           </div>
           <div className="max-w-[400px] mb-8">{product?.descrition}</div>
-          <div className="flex items-center flex-col">
-            <div className="flex justify-start items-center gap-20">
-              <div className="font-bold">Start from ETB {product?.price}</div>
-              <div className="text-sm text-muted-foreground">
-                {product?.bids} bids
+          {timer == "0" || timer.includes("NaN") ? (
+            ""
+          ) : (
+            <div className="flex items-center flex-col">
+              <div className="flex justify-start items-center gap-20">
+                <div className="font-bold">Start from ETB {product?.price}</div>
+                <div className="text-sm text-muted-foreground">
+                  {product?.bids} bids
+                </div>
               </div>
+              <form
+                onSubmit={handleBid}
+                className="flex justify-center items-center gap-10"
+              >
+                <Input
+                  disabled={isLoading}
+                  className="w-30"
+                  type="number"
+                  required
+                  ref={bidRef}
+                ></Input>
+                <Button>
+                  {isLoading ? <span className="loader mr-2"></span> : ""} Place
+                  Bid
+                </Button>
+              </form>
             </div>
-            <form
-              onSubmit={handleBid}
-              className="flex justify-center items-center gap-10"
-            >
-              <Input
-                disabled={isLoading}
-                className="w-30"
-                type="number"
-                required
-                ref={bidRef}
-              ></Input>
-              <Button>
-                {isLoading ? <span className="loader mr-2"></span> : ""} Place
-                Bid
-              </Button>
-            </form>
-          </div>
+          )}
         </CardContent>
       </Card>
 
