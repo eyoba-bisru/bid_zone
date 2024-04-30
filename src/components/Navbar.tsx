@@ -2,20 +2,11 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { auth } from "@/auth";
 import Search from "./Search";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { checkRole } from "@/utils/roles";
 
 const Navbar = async () => {
-  const session = await auth();
-
   return (
     <nav className="flex justify-between items-center px-4">
       <Link href="/" passHref>
@@ -33,28 +24,18 @@ const Navbar = async () => {
 
       <Search />
 
-      <div className="flex items-center">
-        {session?.user ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Avatar>
-                <AvatarImage src={session?.user?.image as string} />
-                <AvatarFallback>E</AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>Edit Profile</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <Link href="/api/auth/signout">
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-              </Link>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <Link href="/api/auth/signin">
-            <Button variant={"link"}>Login</Button>
+      <div className="flex items-center justify-center gap-4">
+        {checkRole("admin") && (
+          <Link href="/admin/dashboard" passHref>
+            <Button variant="outline">Admin</Button>
           </Link>
         )}
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+        <SignedOut>
+          <SignInButton mode="modal" />
+        </SignedOut>
       </div>
     </nav>
   );

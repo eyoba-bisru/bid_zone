@@ -7,10 +7,11 @@ import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Product } from "../../../../types/product";
+import { Product } from "../../../types/product";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/use-toast";
 import useTimer from "@/hooks/useTimer";
+import { useUser } from "@clerk/nextjs";
 
 const ProductDetail = () => {
   const id = useParams().id as string;
@@ -21,6 +22,7 @@ const ProductDetail = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const timer = useTimer(new Date(product?.bidFinish));
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,7 +119,13 @@ const ProductDetail = () => {
             <CardTitle>{product?.title}</CardTitle>
             <Badge className="bg-green-600">{product?.condition?.name}</Badge>
             <div className="text-red-500">
-              {timer == "0" ? "end" : timer.includes("NaN") ? "" : timer}
+              {timer == "0"
+                ? user?.id === product?.userId
+                  ? "You are winner"
+                  : "End"
+                : timer.includes("NaN")
+                ? ""
+                : timer}
               {timer == "0" || timer.includes("NaN") ? (
                 ""
               ) : (
@@ -146,13 +154,15 @@ const ProductDetail = () => {
                 className="flex justify-center items-center gap-10"
               >
                 <Input
-                  disabled={isLoading}
+                  placeholder="Bid amount"
                   className="w-30"
                   type="number"
                   required
                   ref={bidRef}
+                  min={product?.price}
+                  disabled={isLoading}
                 ></Input>
-                <Button>
+                <Button disabled={isLoading}>
                   {isLoading ? <span className="loader mr-2"></span> : ""} Place
                   Bid
                 </Button>

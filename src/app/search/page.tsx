@@ -4,7 +4,7 @@ import ProductCard from "@/components/ProductCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { Product } from "../../../types/product";
+import { Product } from "../../types/product";
 
 const SearchPage = () => {
   const [products, setProducts] = useState<Product[]>([]);

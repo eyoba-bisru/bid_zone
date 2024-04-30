@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { Suspense, useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import ProductCard from "@/components/ProductCard";
-import { Product } from "../../types/product";
+import { Product } from "../types/product";
 import { useSearchParams } from "next/navigation";
 
 export default function Home() {

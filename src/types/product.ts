@@ -10,6 +10,7 @@ export type Product = {
   category: Category;
   condition: Condition;
   bidFinish: Date;
+  userId: string;
 };
 
 export type Category = {

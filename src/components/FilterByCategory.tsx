@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Category } from "../../types/product";
+import { Category } from "../types/product";
 import { Skeleton } from "./ui/skeleton";
 
 const FilterByCategory = () => {

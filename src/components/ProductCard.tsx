@@ -20,7 +20,7 @@ import {
 import Image from "next/image";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
-import { Product } from "../../types/product";
+import { Product } from "../types/product";
 import useTimer from "@/hooks/useTimer";
 
 export default function ProductCard({

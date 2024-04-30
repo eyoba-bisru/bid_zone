@@ -1,17 +1,10 @@
-import { auth } from "@/auth";
+import { currentUser } from "@clerk/nextjs/server";
 import { prisma } from "../../../../prisma/prisma-client";
-import { STATUS_CODES } from "http";
 
 export async function POST(request: Request) {
-  const session = await auth();
+  const user = await currentUser();
 
-  if (!session) {
-    return Response.json({
-      message: "Unauthorized",
-    });
-  }
-
-  if (!session?.user) {
+  if (!user) {
     return Response.json({
       message: "Unauthorized",
     });
@@ -29,7 +22,7 @@ export async function POST(request: Request) {
     if (product!.price < body.amount) {
       await prisma.bid.create({
         data: {
-          userId: session?.user?.id,
+          userId: user.id,
           productId: body.productId,
           price: parseFloat(body.amount),
         },
@@ -42,6 +35,7 @@ export async function POST(request: Request) {
         data: {
           bids: product!.bids + 1,
           price: parseFloat(body.amount),
+          userId: user.id,
         },
       });
     } else {

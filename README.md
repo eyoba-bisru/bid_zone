@@ -4,6 +4,6 @@
 - [x] - search and filter functionality
 - [x] - bid functionality
 - [x] - countdown timer
-- [ ] - image upload
 - [ ] - edit profile (page)
+- [ ] - image upload
 - [ ] - Admin page
